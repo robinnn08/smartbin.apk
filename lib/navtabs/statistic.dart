@@ -3,9 +3,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// class ChartData untuk menampung data dari url json firebase
-// dari map json, data diambil berdasarkan key yang ada pada map json
-// dikembalikan dalam bentuk objek ChartData
+// class ChartData untuk menampung data dari json string yang sudah di decode menjadi Map
 class ChartData {
   ChartData(this.date, this.fullness, this.weight);
 
@@ -30,7 +28,7 @@ class StatisticChart extends StatefulWidget {
 }
 
 class _StatisticChartState extends State<StatisticChart> {
-  // list kosong untuk menampung data dari json
+  // list kosong yang digunakan untuk menampung data yang akan digunakan pada chart nantinya
   List<ChartData> chartData = [];
 
   // fungsi untuk request http get ke url json firebase dan mengambil data json sebagai string
@@ -41,7 +39,7 @@ class _StatisticChartState extends State<StatisticChart> {
     return response.body;
   }
 
-  // fungsi untuk fetch data chart dari json apabila terdapat perubahan data
+  // fungsi untuk menambahkan data dari getJsonForChart ke list chartData
   Future<void> loadChartData() async {
     String jsonString = await getJsonForChart();
     final jsonResponse = json.decode(jsonString);
@@ -85,7 +83,7 @@ class _StatisticChartState extends State<StatisticChart> {
                   child: SizedBox(
                     height: 300,
                     width: 500,
-                    // futurebuilder akan menampilkan chart SfCartesianChart apabila data sudah selesai diambil dari json
+                    // futurebuilder akan mengembalikan chart SfCartesianChart apabila fungsi getJsonForChart sudah selesai, jika belum akan ditampilkan indikator loading
                     child: FutureBuilder(
                         future: getJsonForChart(),
                         builder: (context, snapShot) {
