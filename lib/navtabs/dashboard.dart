@@ -14,13 +14,13 @@ class _DashboardState extends State<Dashboard> {
   final databaseReference = FirebaseDatabase.instance.ref();
   @override
   Widget build(BuildContext context) {
-    // capacityRef untuk mengambil data kapasitas dari database
+    // capacityRef untuk mengambil data kapasitas dari path rtdb /Read/Tong1/capacity
     final capacityRef = databaseReference
         .child('Read')
         .child('Tong1')
         .child('capacity')
         .onValue;
-    // weightRef untuk mengambil data berat dari database
+    // weightRef untuk mengambil data berat dari path rtdb /Read/Tomg1/weight1
     final weightRef =
         databaseReference.child('Read').child('Tong1').child('weight1').onValue;
     return Scaffold(
@@ -32,9 +32,10 @@ class _DashboardState extends State<Dashboard> {
               height: 300,
               // StreamBuilder untuk mengambil data kapasitas dari database melalui stream capacityRef secara realtime
               child: StreamBuilder<DatabaseEvent>(
+                // stream capacityRef akan memantau perubahan data pada path capacity
                 stream: capacityRef,
                 builder: (context, snapshot) {
-                  //Jika data sudah didapat maka akan ditampilkan sebuah gauge
+                  //Jika ada data/perubahan data maka akan dikembalikan sebuah SfRadialGauge
                   if (snapshot.hasData) {
                     final capacity = snapshot.data!.snapshot.value as int;
                     final val = capacity.toDouble();
@@ -139,9 +140,10 @@ class _DashboardState extends State<Dashboard> {
               height: 300,
               // StreamBuilder untuk mengambil data berat dari database melalui stream weightRef secara realtime
               child: StreamBuilder<DatabaseEvent>(
+                // stream weightRef akan memantau perubahan data pada path weight1
                 stream: weightRef,
                 builder: (context, snapshot) {
-                  //Jika data sudah didapat maka akan ditampilkan sebuah gauge
+                  //Jika ada data/perubahan data maka akan dikembalikan sebuah SfRadialGauge
                   if (snapshot.hasData) {
                     final weight = snapshot.data!.snapshot.value as int;
                     final val1 = weight.toDouble();
