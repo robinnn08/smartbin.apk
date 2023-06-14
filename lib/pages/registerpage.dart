@@ -97,7 +97,6 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               const SizedBox(height: 30),
 
-              // logo
               const Image(
                 image: AssetImage('image/trashgif.gif'),
                 height: 100,
@@ -153,7 +152,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: registerUser,
                   ),
                   const SizedBox(height: 20),
-                  // or continue with
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
