@@ -70,6 +70,7 @@ class _NavPageState extends State<NavPage> {
         ),
         body: _pages[_selectedIndex],
         bottomNavigationBar: GNav(
+          // Saat memilih tab halaman lain _selectedIndex akan berubah sesuai index halaman yang ditekan
           onTabChange: (index) => setState(() => _selectedIndex = index),
           iconSize: 20,
           gap: 5,
