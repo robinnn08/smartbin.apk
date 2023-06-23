@@ -91,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               const SizedBox(height: 55),
 
+              // logo
               const Image(
                 image: AssetImage('image/trashgif.gif'),
                 height: 100,
@@ -156,6 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: signUserIn,
                   ),
                   const SizedBox(height: 20),
+                  // or continue with
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
@@ -222,6 +224,8 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               ),
+
+              // sign in button
             ],
           ),
         ),

@@ -1,0 +1,16 @@
+[
+    {
+        "date":"2023-06-11",
+        "fullness":23,
+        "status":"AVAILABLE",
+        "time":"14:29:01",
+        "weight":0
+    },
+    {
+        "date":"2023-06-12",
+        "fullness":86,
+        "status":"AVAILABLE",
+        "time":"14:20:37",
+        "weight":1600
+    }
+]

@@ -21,14 +21,14 @@ class _HomePageState extends State<HomePage> {
 
   // posisi awal pada map
   static const CameraPosition _initialPos = CameraPosition(
-    target: LatLng(-6.2024787, 106.7825044),
+    target: LatLng(-6.20003852, 106.7857378),
     zoom: 16.4746,
   );
 
   // posisi marker pada map (bin1)
   static final Marker _bin1 = Marker(
     markerId: const MarkerId('bin1'),
-    position: const LatLng(-6.2024787, 106.7825044),
+    position: const LatLng(-6.2001682, 106.7857123),
     infoWindow: const InfoWindow(title: 'Bin 1'),
     icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
   );
@@ -53,6 +53,8 @@ class _HomePageState extends State<HomePage> {
         .child('Tong1')
         .child('capacity')
         .onValue;
+    final weightRef =
+        databaseReference.child('Read').child('Tong1').child('weight1').onValue;
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.9),
@@ -74,7 +76,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
+                      padding: const EdgeInsets.only(right: 8.0),
                       child: Container(
                         width: 165,
                         height: 100,
@@ -121,11 +122,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text("Status:",
+                            const Padding(
+                              padding:
+                                  EdgeInsets.only(left: 8.0, top: 8, right: 8),
+                              child: Text("B-1 Weight",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -134,16 +136,85 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.bold,
                                   )),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 8, right: 8),
-                              child: Text("ONLINE",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 145, 221, 147),
-                                    fontSize: 25,
-                                    fontStyle: FontStyle.italic,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                            SizedBox(
+                              width: 165,
+                              height: 70,
+                              child: StreamBuilder<DatabaseEvent>(
+                                stream: weightRef,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    final weight =
+                                        snapshot.data!.snapshot.value as int;
+                                    final val1 = weight.toDouble();
+                                    return SfRadialGauge(
+                                      enableLoadingAnimation: true,
+                                      animationDuration: 2000,
+                                      axes: <RadialAxis>[
+                                        RadialAxis(
+                                          showLabels: false,
+                                          showTicks: false,
+                                          maximum: 2000,
+                                          radiusFactor: 0.75,
+                                          interval: 1,
+                                          axisLineStyle: const AxisLineStyle(
+                                            thickness: 3,
+                                            cornerStyle: CornerStyle.startCurve,
+                                          ),
+                                          pointers: <GaugePointer>[
+                                            RangePointer(
+                                                value: val1,
+                                                width: 5,
+                                                pointerOffset: -6,
+                                                cornerStyle:
+                                                    CornerStyle.bothCurve,
+                                                gradient: const SweepGradient(
+                                                    colors: <Color>[
+                                                      Color.fromARGB(
+                                                          255, 116, 247, 255),
+                                                      Color.fromARGB(
+                                                          255, 224, 136, 251),
+                                                    ],
+                                                    stops: <double>[
+                                                      0.25,
+                                                      0.75
+                                                    ])),
+                                          ],
+                                          annotations: <GaugeAnnotation>[
+                                            GaugeAnnotation(
+                                              angle: 90,
+                                              widget: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    ' $weight g',
+                                                    style: const TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                        color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  }
+
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -169,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                           const Padding(
                             padding:
                                 EdgeInsets.only(left: 8.0, top: 8, right: 8),
-                            child: Text("Fullness:",
+                            child: Text("B-1 Capacity",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -212,9 +283,9 @@ class _HomePageState extends State<HomePage> {
                                               gradient: const SweepGradient(
                                                   colors: <Color>[
                                                     Color.fromARGB(
-                                                        255, 255, 148, 130),
+                                                        255, 224, 136, 251),
                                                     Color.fromARGB(
-                                                        255, 125, 119, 255),
+                                                        255, 116, 247, 255),
                                                   ],
                                                   stops: <double>[
                                                     0.25,

@@ -3,7 +3,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// class ChartData untuk menampung data dari json string yang sudah di decode menjadi Map
+// class ChartData untuk menampung data dari url json firebase
+// dari map json, data diambil berdasarkan key yang ada pada map json
+// dikembalikan dalam bentuk objek ChartData
 class ChartData {
   ChartData(this.date, this.fullness, this.weight);
 
@@ -28,7 +30,7 @@ class StatisticChart extends StatefulWidget {
 }
 
 class _StatisticChartState extends State<StatisticChart> {
-  // list kosong yang digunakan untuk menampung data yang akan digunakan pada chart nantinya
+  // list kosong untuk menampung data dari json
   List<ChartData> chartData = [];
 
   // fungsi untuk request http get ke url json firebase dan mengambil data json sebagai string
@@ -39,7 +41,7 @@ class _StatisticChartState extends State<StatisticChart> {
     return response.body;
   }
 
-  // fungsi untuk menambahkan data dari getJsonForChart ke list chartData
+  // fungsi untuk fetch data chart dari json apabila terdapat perubahan data
   Future<void> loadChartData() async {
     String jsonString = await getJsonForChart();
     final jsonResponse = json.decode(jsonString);
@@ -82,8 +84,8 @@ class _StatisticChartState extends State<StatisticChart> {
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
                     height: 300,
-                    width: 500,
-                    // futurebuilder akan mengembalikan chart SfCartesianChart apabila fungsi getJsonForChart sudah selesai, jika belum akan ditampilkan indikator loading
+                    width: 600,
+                    // futurebuilder akan menampilkan chart SfCartesianChart apabila data sudah selesai diambil dari json
                     child: FutureBuilder(
                         future: getJsonForChart(),
                         builder: (context, snapShot) {
@@ -151,7 +153,7 @@ class _StatisticChartState extends State<StatisticChart> {
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
                     height: 300,
-                    width: 500,
+                    width: 600,
                     child: FutureBuilder(
                         future: getJsonForChart(),
                         builder: (context, snapShot) {

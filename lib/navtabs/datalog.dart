@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// class log yang digunakan untuk menerima data dalam bentuk Map dari json yang nantinya digunakan pada List logList 
+// class log yang digunakan untuk menampung data dari url json yang diambil dari firebase
 class Log {
   factory Log.fromJson(Map<String, dynamic> json) {
     return Log(
@@ -30,8 +30,7 @@ class Log {
   final int? weight;
 }
 
-// class LogDataGridSource membuat sebuah list dari getDataLogSource yang passing logList ke class ini
-// dari list tersebut digunakan untuk membangun cell dan rows pada datagrid nantinya sebagai sumber data 
+// class LogDataGridSource sebagai sumber data untuk menampilkan data pada row2 di SfDataGrid
 class LogDataGridSource extends DataGridSource {
   LogDataGridSource(this.logList) {
     buildDataGridRow();
@@ -131,7 +130,8 @@ class DataLog extends StatefulWidget {
 
 class _DataLogState extends State<DataLog> {
   // mengambil data dari url json yang diambil dari firebase,
-  // kemudian di decode menjadi sebuah List of Log object yang dikembalikan sebagai logList
+  // kemudian di decode menjadi Map<String, dynamic>
+  // lalu di mapping menjadi List<Log>
   Future<List<Log>> generateLogList() async {
     var response = await http.get(Uri.parse(
         'https://esp-scale-default-rtdb.asia-southeast1.firebasedatabase.app/LogTest.json'));
@@ -141,7 +141,9 @@ class _DataLogState extends State<DataLog> {
     return logList;
   }
 
-  // fungsi ini menerima logList dari fungsi generateLogList yang akan dikembalikan class LogDataGridSource dengan passing argumen logList ke constructor dari LogDataGridSource
+  // mengambil data menggunakan fungsi generateLogList()
+  // kemudian memasukkan data tersebut ke dalam LogDataGridSource
+  // untuk ditampilkan sebagai sumber data pada SfDataGrid
   Future<LogDataGridSource> getLogDataSource() async {
     var logList = await generateLogList();
     return LogDataGridSource(logList);
@@ -153,7 +155,7 @@ class _DataLogState extends State<DataLog> {
     return <GridColumn>[
       GridColumn(
           columnName: 'date',
-          width: 88,
+          width: 100,
           label: Container(
               padding: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
@@ -168,7 +170,7 @@ class _DataLogState extends State<DataLog> {
               ))),
       GridColumn(
           columnName: 'time',
-          width: 77,
+          width: 75,
           label: Container(
               padding: const EdgeInsets.all(8),
               alignment: Alignment.centerLeft,
@@ -233,8 +235,9 @@ class _DataLogState extends State<DataLog> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.9),
-      // digunakan FutureBuilder untuk menunggu fungsi getLogDataSource() selesai mengembalikan LogDataGridSource
-      // jika data sudah didapatkan, maka akan ditampilkan data gridnya. Jika belum akan ditampilkan indikator loading
+      // digunakan FutureBuilder untuk menunggu data dari getLogDataSource()
+      // yaitu Future<LogDataGridSource>
+      // jika data sudah didapatkan, maka akan ditampilkan tabel data gridnya
       body: FutureBuilder(
         future: getLogDataSource(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
