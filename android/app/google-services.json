@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "472730669837",
+    "firebase_url": "https://esp-scale-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "esp-scale",
+    "storage_bucket": "esp-scale.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472730669837:android:2c97bdff31648817375644",
+        "android_client_info": {
+          "package_name": "com.example.smart_bin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472730669837-h0ou387om0m061qcivormeurq7pvgtaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3lJ_uKI-s_QASFbfv4j-SsPjGD4Vm6aM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472730669837-h0ou387om0m061qcivormeurq7pvgtaf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "472730669837-asoo29hami6b6laidftigolrjnbnie9o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trngetiau"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472730669837:android:305bac593324339e375644",
+        "android_client_info": {
+          "package_name": "com.example.trngetiau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472730669837-h0ou387om0m061qcivormeurq7pvgtaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3lJ_uKI-s_QASFbfv4j-SsPjGD4Vm6aM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472730669837-h0ou387om0m061qcivormeurq7pvgtaf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "472730669837-asoo29hami6b6laidftigolrjnbnie9o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trngetiau"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
